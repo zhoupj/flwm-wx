@@ -1,0 +1,16 @@
+<!--用name 定义模版-->
+<template name="docList">
+  <view class="chunk">
+    <view class="digest">
+      <text>{{title}}</text>
+    </view>
+    <view>
+      <text>{{time}}</text>
+    </view>
+  </view>
+</template>
+ 
+<view wx:for="{{msgList}}" wx:key="{{id}}">
+    <!--用is 使用模版-->
+    <template is="docList" data="{{...item}}"/>
+</view>

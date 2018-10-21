@@ -1,0 +1,49 @@
+{
+  "pages":[
+    "pages/login/login",
+    "pages/index/index",
+    "pages/search/search",
+    "pages/select/select",
+    "pages/mine/mine",
+    "pages/logs/logs",
+    "pages/detail/detail"
+    
+  ],
+  "window":{
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "圣杯",
+    "navigationBarTextStyle":"black"
+  },
+  "tabBar": {
+    "color": "#a9b7b7",
+    "selectedColor": "#11cd6e",
+    "borderStyle": "gray",
+    "list": [
+      {
+        "selectedIconPath": "images/index_red.png",
+        "iconPath": "images/index.png",
+        "pagePath": "pages/index/index",
+        "text": "首页"
+      },
+      {
+        "selectedIconPath": "images/search_red.png",
+        "iconPath": "images/search.png",
+        "pagePath": "pages/search/search",
+        "text": "查找"
+      },
+      {
+        "selectedIconPath": "images/cart_red.png",
+        "iconPath": "images/cart.png",
+        "pagePath": "pages/select/select",
+        "text": "自选"
+      },
+      {
+        "selectedIconPath": "images/user_red.png",
+        "iconPath": "images/user.png",
+        "pagePath": "pages/mine/mine",
+        "text": "我的"
+      }
+    ]
+  }
+}
