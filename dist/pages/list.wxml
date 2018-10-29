@@ -1,14 +1,14 @@
 
 <view class="co-group-list">
   <view class="weui-panel">
-    <view class="weui-cells">
+    <view class="weui-cells weui-cells_after-title">
       <block  wx:for="{{$list$list}}" wx:key="index">
         <block wx:if="{{ $list$type === 'list' }}">
           <view class="weui-cell">
             <view class="weui-cell__hd"><image class="userinfo-avatar" src="/images/icon/icon-avatar@2x.png"/></view>
             <view class="weui-cell__bd">
-              <view>联系人-{{item.id}}</view>
-              <view>{{item.title}}</view>
+              <view>联系人-{{item.id}}-{{index}}</view>
+              <view>{{item.digest}}</view>
             </view>
           </view>
         </block>

@@ -1,0 +1,9 @@
+
+<view class="page-vip">
+  <view class="page__bd" bindtap="tap">
+    <view class="weui-btn color" hover-class="color-hover"  wx:for="{{colorArray}}" wx:key="*this" style="background-color:{{'#' + item.color}};" data-color="{{item.color}}">
+      <view class="sub-title">{{item.name}}</view>
+      <view class="level">{{item.cname}}</view>
+    </view>
+  </view>
+</view>

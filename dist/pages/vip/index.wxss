@@ -1,0 +1,1 @@
+.page-vip{padding:0 20rpx}.page-vip .vip-icon{width:100rpx;height:100rpx;display:block;margin-right:20rpx}.page-vip .color{color:white;text-shadow:2rpx 2rpx 5rpx black;margin:0;border-radius:12rpx;padding:10rpx 20rpx}.page-vip .color-hover{opacity:.8}.page-vip text{font-size:.6rem}.page-vip .weui-btn{margin-top:20rpx}.page-vip .sub-title{font-size:.8rem}
