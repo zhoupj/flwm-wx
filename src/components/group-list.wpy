@@ -1,0 +1,70 @@
+<style>
+  .userinfo-avatar {
+    width: 100rpx;
+    height: 100rpx;
+    margin-right: 30rpx;
+  }
+
+</style>
+
+<template lang="pug">
+  view(class="co-group-list")
+    view(class="weui-panel")
+      view(class="weui-cells weui-cells_after-title")
+        block(wx:for="{{list}}" wx:key="index")
+          block(wx:if="{{ type === 'list' }}")
+            view(class="weui-cell")
+              view(class="weui-cell__hd")
+                <image class="userinfo-avatar" src="/images/icon/icon-avatar@2x.png" />
+              view(class="weui-cell__bd")
+                view 联系人-{{item.id}}-{{index}}
+                view {{item.digest}}
+      block(wx:if="{{loading}}")
+        view(class="weui-loadmore")
+          view(class="weui-loading")
+          view(class="weui-loadmore__tips") 正在加载...
+      block(wx:elif="{{noMore}}")
+        view(class="weui-loadmore weui-loadmore_line weui-loadmore_dot")
+          view(class="weui-loadmore__tips weui-loadmore__tips_in-line weui-loadmore__tips_in-dot")
+      block(wx:if="{{noMore}}")
+        view(class="weui-loadmore weui-loadmore_line")
+          view(class="weui-loadmore__tips weui-loadmore__tips_in-line")
+            text 暂无内容
+</template>
+
+<script>
+  import wepy from 'wepy'
+
+  export default class List extends wepy.component {
+    props = {
+      list: {
+        type: Object,
+        default: []
+      },
+      title: {
+        type: String,
+        default: null
+      },
+      loading: {
+        type: Boolean,
+        default: false
+      },
+      noMore: {
+        type: Boolean,
+        default: false
+      },
+      /**
+       * [type 列表类型：常规列表/收藏列表]
+       * @type {list/collect}
+       */
+      type: {
+        type: String,
+        default: 'list'
+      }
+    }
+
+    components = {
+    }
+  }
+
+</script>

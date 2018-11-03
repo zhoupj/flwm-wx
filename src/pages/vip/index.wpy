@@ -1,0 +1,117 @@
+<style lang="less">
+.page-vip {
+  padding: 0 20rpx;
+  .vip-icon {
+    width: 100rpx;
+    height: 100rpx;
+    display: block;
+    margin-right: 20rpx;
+  }
+  .color {
+    color: white;
+    text-shadow: 2rpx 2rpx 5rpx black;
+    margin: 0;
+    border-radius: 12rpx;
+    padding: 10rpx 20rpx;
+  }
+
+  .color-hover {
+    opacity: .8;
+  }
+
+  text {
+    font-size: .6rem;
+  }
+  .weui-btn {
+    margin-top: 20rpx;
+  }
+  .sub-title {
+    font-size: 0.8rem;
+  }
+}
+
+</style>
+<template lang="pug">
+  view(class='page-vip')
+    view(class="page__bd" @tap="tap")
+      view(class="weui-btn color"
+      hover-class="color-hover"
+      wx:for="{{colorArray}}"
+      wx:key="*this"
+      style="background-color:{{'#' + item.color}};"
+      data-color="{{item.color}}")
+        view(class="sub-title") {{item.name}}
+        view(class="level") {{item.cname}}
+</template>
+
+<script>
+  import wepy from 'wepy'
+
+  export default class Index extends wepy.page {
+    config = {
+      navigationBarTitleText: '会员VIP'
+    }
+    components = {
+    }
+
+    data = {
+      colorArray: [{
+        id: '001',
+        name: '八折出售（￥30）',
+        cname: '一月VIP会员',
+        color: 'DC9FB4'
+      }, {
+        id: '002',
+        name: '八折出售（￥60）',
+        cname: '二月VIP会员',
+        color: 'E16B8C'
+      }, {
+        id: '003',
+        name: '八折出售（￥90）',
+        cname: '三月VIP会员',
+        color: '8E354A'
+      }, {
+        id: '004',
+        name: '八折出售（￥180）',
+        cname: '半年VIP会员',
+        color: '64363c'
+      }, {
+        id: '005',
+        name: '八折出售（￥360）',
+        cname: '全年VIP会员',
+        color: 'D0104C'
+      }, {
+        id: '006',
+        name: '八折出售（￥720）',
+        cname: '二年VIP会员',
+        color: '904840'
+      }]
+    }
+
+    computed = {
+      now () {
+        return +new Date()
+      }
+    }
+
+    events = {
+    }
+
+    onPullDownRefresh() {
+      this.initPageData()
+    }
+
+    onReady() {
+      this.initPageData()
+    }
+
+    initPageData() {
+    }
+
+    methods = {
+      tap() {
+        wx.navigateBack()
+      }
+    }
+  }
+</script>

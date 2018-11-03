@@ -1,0 +1,61 @@
+<template lang="pug">
+  view(class='page-index')
+    <list :list.sync="list" :loading.sync="loading" :noMore.sync="noMoreList"></list>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import List from '../components/group-list'
+  import http from '../mixins/http'
+  import { api } from '../api/index.js'
+
+  export default class Index extends wepy.page {
+    mixins = [http]
+
+    config = {
+      navigationBarTitleText: '主页'
+    }
+    components = {
+      list: List
+    }
+
+    data = {
+      page: 1,
+      pageSize: 20,
+      loading: false,
+      noMoreList: false,
+      list: []
+    }
+
+    computed = {
+      now () {
+        return +new Date()
+      }
+    }
+
+    events = {
+    }
+
+    onPullDownRefresh() {
+      this.initPageData()
+    }
+
+    onShow() {
+      this.initPageData()
+    }
+
+    initPageData() {
+      wx.showToast({ title: 'fdsklfjsdl' })
+      this.post(api.atclist, {
+        pn: 0,
+        sz: 10
+      }, false).then((res) => {
+        this.list = [
+          ...this.list,
+          ...res
+        ]
+        this.$apply()
+      })
+    }
+  }
+</script>

@@ -1,0 +1,62 @@
+<template lang="pug">
+  view(class='page-list')
+    <list :list.sync="list" :loading.sync="loading" :noMore.sync="noMoreList"></list>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import List from '../components/group-list'
+
+  export default class Index extends wepy.page {
+
+    config = {
+      navigationBarTitleText: '列表'
+    }
+    components = {
+      list: List
+    }
+
+    data = {
+      page: 1,
+      pageSize: 20,
+      loading: false,
+      noMoreList: false,
+      list: [{
+        id: 999,
+        title: '才人'
+      }, {
+        id: 456,
+        title: '小三'
+      }, {
+        id: 789,
+        title: '小姑娘'
+      }, {
+        id: 789,
+        title: '天线图'
+      }, {
+        id: 789,
+        title: 'K路图'
+      }]
+    }
+
+    computed = {
+      now () {
+        return +new Date()
+      }
+    }
+
+    events = {
+    }
+
+    onPullDownRefresh() {
+      this.initPageData()
+    }
+
+    onReady() {
+      this.initPageData()
+    }
+
+    initPageData() {
+    }
+  }
+</script>

@@ -1,0 +1,13 @@
+{
+  "description": "股票分析",
+  "setting": {
+    "urlCheck": true,
+    "es6": false,
+    "postcss": false,
+    "minified": false
+  },
+  "compileType": "miniprogram",
+  "appid": "wx2e203dc8ee9f36b6",
+  "projectname": "stock",
+  "miniprogramRoot": "./dist"
+}

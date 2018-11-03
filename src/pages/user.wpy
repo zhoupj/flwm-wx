@@ -1,0 +1,128 @@
+<style lang="less">
+.page-user{
+
+  @userinfoHeight: 100rpx;
+  @userinfoSpace: 8rpx;
+
+  .userinfo{
+    padding: 20rpx 0;
+  }
+
+  .userinfo-avatar {
+    float: left;
+    width: @userinfoHeight;
+    height: @userinfoHeight;
+    border-radius: 50%;
+  }
+
+  // space + space
+  .userinfo-info {
+    float: left;
+    line-height: 1;
+    padding: @userinfoSpace 0;
+    margin-left: 3 * @userinfoSpace;
+  }
+
+  // text + space + text
+  .userinfo-nickname {
+    color: #5cbaa7;
+    font-size: (@userinfoHeight - 4 * @userinfoSpace) * (16 / 30);
+    margin-bottom: 2 * @userinfoSpace;
+  }
+  .userinfo-status {
+    color: #999;
+    font-size: (@userinfoHeight - 4 * @userinfoSpace) * (14 / 30);
+
+  }
+  .cell-icon {
+    width: 40rpx;
+    height: 40rpx;
+    margin-right: 8rpx;
+    display: block;
+  }
+}
+
+</style>
+
+<template lang="pug">
+  view(class='page-user')
+    view(class="weui-panel")
+      view(class="weui-cells weui-cells_after-title")
+        view(class="weui-cell")
+          view(class="weui-cell__bd userinfo clearfix")
+            image(class="userinfo-avatar" src="{{ userInfo.avatarUrl }}" background-size="cover")
+            view(class="userinfo-info")
+              view(class="userinfo-nickname") {{ userInfo.nickName }}
+              view(class="userinfo-status") 15271233123
+    view(class="weui-panel")
+      view(class="weui-cells weui-cells_after-title")
+        navigator(url="/pages/vip/index" class="weui-cell weui-cell_access" hover-class="weui-cell_active")
+          view(class="weui-cell__hd")
+            image(src="../images/icon/icon-vip.png" class="cell-icon")
+          view(class="weui-cell__bd") VIP
+          view(class="weui-cell__ft weui-cell__ft_in-access")
+        navigator(url="/pages/main" class="weui-cell weui-cell_access" hover-class="weui-cell_active")
+          view(class="weui-cell__bd") 设置
+          view(class="weui-cell__ft weui-cell__ft_in-access")
+        navigator(url="/pages/main" class="weui-cell weui-cell_access" hover-class="weui-cell_active")
+          view(class="weui-cell__bd") 帮助
+          view(class="weui-cell__ft weui-cell__ft_in-access")
+        navigator(url="/pages/main" class="weui-cell weui-cell_access" hover-class="weui-cell_active")
+          view(class="weui-cell__bd") 其它
+          view(class="weui-cell__ft weui-cell__ft_in-access")
+    view(class="weui-panel")
+      view(class="weui-cells weui-cells_after-title")
+        view(class="weui-cell")
+          view(class="weui-cell__bd") 清楚缓存
+          view(class="weui-cell__ft weui-cell__ft_in-access")
+        view(class="weui-cell")
+          view(class="weui-cell__bd") 关于我们
+          view(class="weui-cell__ft weui-cell__ft_in-access")
+    view(class="weui-panel")
+      view(class="weui-cells weui-cells_after-title")
+        view(class="weui-cell")
+          button(open-type='getUserInfo' class="weui-cell__bd" type="primary") 退出账号
+</template>
+
+<script>
+  import wepy from 'wepy'
+  // import { UTILS, HTTP, TIPS } from 'wepy-utils'
+  import http from '../mixins/http'
+  import user from '../mixins/user'
+
+  export default class Index extends wepy.page {
+    mixins = [http, user]
+
+    config = {
+      navigationBarTitleText: '我的'
+    }
+    components = {
+    }
+
+    data = {
+      userInfo: {
+        nickName: '加载中...',
+        // 头像占位图
+        avatarUrl: '../images/icon/icon-avatar@2x.png'
+      }
+    }
+
+    computed = {
+      now () {
+        return +new Date()
+      }
+    }
+
+    onShow() {
+      // 初始化页面数据
+      this.$getUserInfo((info) => {
+        // const uinfo = this.getObject(info)
+        // const userInfo = this.getObject(this.userInfo)
+        this.userInfo = info
+      })
+    }
+
+    events = {
+    }
+  }
+</script>

@@ -1,0 +1,117 @@
+<style lang="css">
+@import 'styles/weui.wxss';
+
+page {
+  background-color: #efefef;
+}
+</style>
+
+<script>
+import wepy from 'wepy'
+import 'wepy-async-function'
+
+import { setStore } from 'wepy-redux'
+import configStore from './store'
+
+const store = configStore()
+setStore(store)
+
+export default class extends wepy.app {
+  config = {
+    pages: [
+      'pages/main',
+      'pages/vip/index',
+      'pages/index',
+      'pages/list',
+      'pages/user'
+    ],
+    window: {
+      navigationBarTitleText: '股票分析',
+      navigationBarTextStyle: 'white',
+      navigationBarBackgroundColor: '#049BFF',
+      backgroundColor: '#eaeaea',
+      backgroundTextStyle: 'light',
+      enablePullDownRefresh: true
+    },
+    tabBar: {
+      color: '#a9b7b7',
+      selectedColor: '#11cd6e',
+      backgroundColor: '#fff',
+      borderStyle: 'black',
+      list: [{
+        pagePath: 'pages/main',
+        selectedIconPath: './images/tabbars/icon-home-active.png',
+        iconPath: './images/tabbars/icon-home.png',
+        text: '首页'
+      }, {
+        pagePath: 'pages/list',
+        selectedIconPath: './images/tabbars/icon-search-active.png',
+        iconPath: './images/tabbars/icon-search.png',
+        text: '查找'
+      }, {
+        pagePath: 'pages/main',
+        selectedIconPath: './images/tabbars/icon-cart-active.png',
+        iconPath: './images/tabbars/icon-cart.png',
+        text: '自选'
+      }, {
+        pagePath: 'pages/user',
+        selectedIconPath: './images/tabbars/icon-user-active.png',
+        iconPath: './images/tabbars/icon-user.png',
+        text: '我的'
+      }]
+    },
+    networkTimeout: {
+      request: 5000,
+      downloadFile: 10000
+    },
+    debug: true
+  }
+
+  globalData = {
+    userInfo: null
+  }
+
+  constructor () {
+    super()
+    this.use('requestfix')
+  }
+
+  onLaunch() {
+  }
+
+  onShow(options) {
+  }
+
+  /* ============= 工具方法 ============= */
+  isObject(item) {
+    return typeof item === 'object' && !this.isArray(item)
+  }
+  isArray(item) {
+    return Object.prototype.toString.apply(item) === '[object Array]'
+  }
+  isUndefined(item) {
+    return typeof item === 'undefined'
+  }
+
+  /* ========================= 更新缓存信息 ======================== */
+  $updateGlobalData(name, obj) {
+    // 校验: globalData
+    if (!this.globalData) return
+    // 校验: 操作字段
+    if (typeof name !== 'string' || name === '') return {}
+    // 取已有信息
+    const info = this.globalData[name] || {}
+    // 更新缓存
+    if (obj && this.isObject(obj)) {
+      // Object合并第一层
+      this.globalData[name] = Object.assign({}, info, obj)
+    } else if (!this.isUndefined(obj)) {
+      // 其他非undefined数据直接覆盖
+      this.globalData[name] = obj
+    }
+    this.$apply && this.$apply()
+    // console.info(`[${obj ? 'UPDATE' : 'GET'} GlobalData ${name}]:`, this.globalData[name])
+    return this.globalData[name]
+  }
+}
+</script>
