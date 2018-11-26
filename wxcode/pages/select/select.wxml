@@ -1,2 +1,63 @@
-<!--pages/select/select.wxml-->
-<text>pages/select/select.wxml</text>
+<view class="page">
+    <view class="page__bd">
+        <view class="weui-tab">
+            <view class="weui-navbar nav_b_c">
+                <block wx:for="{{tabs}}" wx:key="*this">
+                    <view id="{{index}}" class="weui-navbar__item {{activeIndex == index ? 'weui-bar__item_on nav_b_c_active' : ''}}" bindtap="tabClick">
+                        <view class="weui-navbar__title {{activeIndex == index ? ' nav_b_c_active' : ''}}">{{item}}</view>
+                    </view>
+                </block>
+                <!-- <view class="weui-navbar__slider" style="left: {{sliderLeft}}px; transform: translateX({{sliderOffset}}px); -webkit-transform: translateX({{sliderOffset}}px);"></view> -->
+            </view>
+            <view class="weui-tab__panel">
+                 <view class="top">
+                    <view class="tableLeft" wx:if="{{data && data.length>0}}">
+                        <view class="trLeft bg-w trh">
+                          <view class="thLeft">名称</view>
+                        </view>
+                        <block wx:for="{{data}}" wx:key="{{code}}">
+                                <view class="trLeft  bg-g">
+                                  <view class="tdLeft">{{item.name}}<view class="code">{{item.code}}</view> </view> 
+                                </view>
+                        </block> 
+                    </view>       
+                  <scroll-view scroll-x class="scroll-x"  wx:if="{{data && data.length>0}}">
+                    
+                      <view class="table">
+                          <view class="tr bg-w trh" >
+                            <view class="th ">行业</view>
+                            <view class="th">涨幅</view>
+                            <view class="th">总市值</view>
+                            <view class="th">差值</view>
+                            <view class="th ">RPS250</view>
+                            <view class="th ">RPS120</view>
+                              <view class="th ">SSR2</view>
+                              <view class="th ">基金</view>
+                              <view class="th ">港资</view>
+                              <view class="th ">换手率</view>
+                              <view class="th ">波动率</view>
+                                <view class="th ">市盈率</view>
+                          </view>
+                          <block wx:for="{{data}}" wx:key="{{code}}">
+                            <view class="tr bg-g" bindlongpress="seeDetail" data-code="{{item.code}}">
+                              <view class="td">{{item.industry}}</view>
+                              <view class="td {{item.incof2d>0?'green-color':'red-color'}}">{{item.incof2d}}</view>
+                              <view class="td">{{item.totals}}</view>
+                                <view class="td">{{item.difftohigh250}}</view>
+                                <view class="td">{{item.rps250}}</view>
+                              <view class="td">{{item.rps120}}</view>
+                              <view class="td">{{item.ssr2}}</view>
+                              <view class="td">{{item.fundHolding}}</view>
+                                <view class="td">{{item.hkHoldingAmount}}</view>
+                                <view class="td">{{item.turn}}</view>
+                              <view class="td">{{item.fluof250d}}</view>
+                              <view class="td">{{item.pettm}}</view>
+                            </view>
+                          </block>
+                        </view>
+                    </scroll-view> 
+                    </view>
+            </view>
+        </view>
+    </view>
+</view>

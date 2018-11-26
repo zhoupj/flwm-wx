@@ -7,3 +7,8 @@
 .digest {
   color:green
 }
+
+
+image{
+    margin: 4px 0;
+}

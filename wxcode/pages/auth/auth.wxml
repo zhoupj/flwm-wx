@@ -1,8 +1,8 @@
-<!--pages/login/login.wxml-->
+<!--pages/auth/auth.wxml-->
 
 <view wx:if="{{canIUse}}">
     <view class='header'>
-        <image src='/images/wx_login.png'></image>
+        <view>Let Investment Become Simple</view>
     </view>
  
     <view class='content'>

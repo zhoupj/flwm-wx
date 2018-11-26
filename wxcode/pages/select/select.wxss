@@ -1,1 +1,25 @@
-/* pages/select/select.wxss */
+/**app.wxss**/
+@import '../../style/list.wxss';
+
+
+.page__bd{
+    height: 100%;
+}
+.page__bd{
+    padding-bottom: 0;
+}
+.weui-tab__content{
+    padding-top: 60px;
+    text-align: center;
+}
+
+.nav_b_c{
+  background: rgb(52, 168, 52);
+  color:#fff
+}
+
+.nav_b_c_active{
+  background:#fff;
+  color:#000
+}
+
