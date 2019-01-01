@@ -3,42 +3,76 @@ Page({
   data: {
     search: {
       showTopTips: false,
-      date: "2018-11-22",
+      dateRange:[],
+      dateIdx:0,
       rps: ["250", "120", "50"],
       rpsIdx: 0,
-      high: ["一年新高", "半年新高"],
+      high: ["250", "120"],
       highIdx: 0,
+
     },
-    pageNo: 0,
+    result: {
+      data: [],
+      load: false,
+    },
+    open: false,
+    pageNo: 1,
     total: 0,
     ps: 20,
-    data: [],
-    open: false,
     formData: null
   },
   onLoad: function(options) {
-
+    var that=this;
     // 页面初始化 options为页面跳转所带来的参数
+    util.ajax({
+      url: '/search/ds',
+      succ: function (res) {
+        that.setData({
+          'search.dateRange': res.data,
+        })
+      }
+    })
   },
 
+  sort:function(e){
+     var p = e.currentTarget.dataset.field
+     var data=util.sort(this.data.result.data,p);
+     this.setData({'result.data':data});
+  },
 
+  // onShow:function(){
+  //   if(this.data.search.dateRange.length==0){
+  //     this.onLoad();
+  //   }
+  // },
 
   onReady: function() {
 
   },
 
   seeDetail: function(e) {
+    var itemList=['分析', '+观察组', '+候选组', '+持有组'];
     wx.showActionSheet({
-      itemList: ['详情', '＋观察组', '＋候选组', '＋持有组', '＋淘汰组'],
+      itemList: itemList,
       success: function(res) {
         if (!res.cancel) {
-          console.log('idx', res.tapIndex)
           if (res.tapIndex === 0) {
             wx.navigateTo({
-              url: '/pages/detail/detail?code=' + e.currentTarget.dataset.code,
+              url: '/pages/detail/detail?code=' + e.currentTarget.dataset.code + '&name=' + e.currentTarget.dataset.name,
             })
           } else {
-
+            var gp = util.getGroupIdx(itemList[res.tapIndex])
+            util.ajax({
+              url: '/sel/add',
+              data: {code: e.currentTarget.dataset.code,group:gp},
+              succ: function (res) {
+                wx.showToast({
+                  title: '添加成功',
+                  icon: 'success',
+                  duration: 1000
+                });
+              }
+            })    
           }
         }
       }
@@ -69,30 +103,19 @@ Page({
   },
   bindDateChange: function(e) {
     this.setData({
-      'search.date': e.detail.value
+      'search.dateIdx': e.detail.value
     })
   },
 
-  onLoad: function(options) {
-    // 页面初始化 options为页面跳转所带来的参数
+  onPullDownRefresh:function(){
+    console.log("refresh");
   },
-  onReady: function() {
-    // 页面渲染完成
-  },
-  onShow: function() {
-    // 页面显示
-  },
-  onHide: function() {
-    // 页面隐藏
-  },
-  onUnload: function() {
-    // 页面关闭
-  },
+
   onReachBottom: function() {
     var pn = this.data.pageNo + 1;
     var t = this.data.total;
     var that = this;
-    if (pn * 20 < t) {
+    if (pn * 20-20< t) {
       var formData = this.data.formData;
       formData['pageNo'] = pn;
 
@@ -100,9 +123,9 @@ Page({
         url: '/search/list',
         data: formData,
         succ: function(res) {
-          var newData = that.data.data.concat(res.data);
+          var newData = that.data.result.data.concat(res.data);
           that.setData({
-            data: newData,
+            'result.data': newData,
             total: res.total,
             formData: formData,
             pageNo: pn
@@ -118,9 +141,19 @@ Page({
     });
   },
 
+  recordToggle:function(e){
+    wx.navigateTo({
+      url: '/pages/search/record/record',
+    })
+  },
+
 
 
   formSubmit: function(e) {
+    this.setData({
+      'result.load': true,
+      open: false,
+    })
     var that = this;
     var formData = e.detail.value;
     if (formData.rps == 0) {
@@ -137,21 +170,22 @@ Page({
     }
     formData['gy'] = formData['gy'] == true ? 1 : 0;
     formData['isMR'] = formData['isMR'] == true ? 1 : 0;
+    formData['tradeDate'] = this.data.search.dateRange[formData.dt];
 
     if (formData['hkHoldingAmount'] == '') {
       formData['hkHoldingAmount'] = null;
     }
 
     formData['pageSize'] = this.data.ps;
-    formData['pageNo'] = 0;
+    formData['pageNo'] = 1;
 
     util.ajax({
       url: '/search/list',
       data: formData,
       succ: function(res) {
         that.setData({
-          open: false,
-          data: res.data,
+          'result.load':false,
+          'result.data': res.data,
           total: res.total,
           formData: formData
         })

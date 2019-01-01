@@ -4,30 +4,33 @@ const app = getApp()
 
 Page({
   data: {
-    motto: '坚持就是胜利',
+   // motto: '坚持就是胜利',
     userInfo: {},
+    userData:{},
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
-    count: 1,
-    myPosition: []
+    //count: 1,
+    //myPosition: []
   },
-  onPullDownRefresh: function () {
-    console.log('refresh')
-    this.setData({ count: this.data.count + 1 })
-  },
-  //事件处理函数
-  bindViewTap: function () {
-    wx.navigateTo({
-      url: '../logs/logs'
-    })
-  },
+  // onPullDownRefresh: function () {
+  //   console.log('refresh')
+  //   this.setData({ count: this.data.count + 1 })
+  // },
+  // //事件处理函数
+  // bindViewTap: function () {
+  //   wx.navigateTo({
+  //     url: '../logs/logs'
+  //   })
+  // },
   onLoad: function () {
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,
-        hasUserInfo: true
+        hasUserInfo: true,
+        userData:app.globalData.userData
       })
     } else if (this.data.canIUse) {
+      console.log('no userinfo');
       // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
       // 所以此处加入 callback 以防止这种情况
       app.userInfoReadyCallback = res => {
@@ -57,19 +60,4 @@ Page({
       hasUserInfo: true
     })
   },
-  clickMe: function (e) {
-    var that=this;
-    wx.request({
-      url: 'http://127.0.0.1:8000/',
-      success: function (res) {
-        console.log("query sucess！"+ res.data);
-        that.setData({
-          motto: res.data
-        })
-      },
-      
-    })
-
-    
-  }
 })

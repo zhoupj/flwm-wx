@@ -42,7 +42,6 @@ Component({
           + '#%E5%BE%AE%E4%BF%A1%E7%89%88%E6%9C%AC%E8%A6%81%E6%B1%82');
         return;
       }
-
       ctx = wx.createCanvasContext(this.data.canvasId, this);
 
       const canvas = new WxCanvas(ctx, this.data.canvasId);
@@ -57,7 +56,7 @@ Component({
           this.chart = callback(canvas, res.width, res.height);
         }
         else if (this.data.ec && typeof this.data.ec.onInit === 'function') {
-          this.chart = this.data.ec.onInit(canvas, res.width, res.height);
+          this.chart = this.data.ec.onInit(canvas, res.width, res.height, this.data.canvasId);
         }
         else {
           this.triggerEvent('init', {

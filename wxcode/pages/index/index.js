@@ -3,36 +3,68 @@ const util = require('../../utils/util.js')
 
 Page({
   data: {
-    theme:"断舍离",
-    themeDesc:"得一种武功不易，坚持一种武功难，坚持一种武功长久更难",
+    pn:0,
+    sz:10,
     msgList: [
       {
-        title: "前言",
-        src: "../../images/zgs.jpeg",
-        content: "这是一本书的名字，该书主要讲述了日本杂物管理咨询师山下英子推出的概念：断=不买、不收取不需要的东西。舍=处理掉堆放在家里没用的东西。离=舍弃对物质的迷恋，让自己处于宽敞舒适，自由自在的空间，反观投资中的道理亦是如此。"
+        title: "使用说明",
+        digest: "让投资变的更简单是我们的梦想",
+        visit:2323234,
+        publishTime: "2017-3-5 23:02:59",
+        id:9
       },{
-        title: "断",
-        src: "",
-        content: "学习一种策略，了解"
+        id:8,
+        title: "如何入门",
+        digest: "学习一种策略，了解",
+        publishTime: "2017-3-5 23:02:59",
+        visit: 12324
       },
       {
         id: 2,
-        title: "舍",
-        time: "2017-3-5 23:02:59",
+        title: "如何笑到最后",
+        publishTime: "2017-3-5 23:02:59",
         src: "",
-        content: '不懂得不要碰，不擅长的不要碰'
+        digest: '不懂得不要碰，不擅长的不要碰',
+        visit: 103240
       },
       {
         id: 3,
-        title: "离",
-        time: "2017-3-5 23:03:59",
-        src: "",
-        content: "要有舒适自由自在的心态"
-      }
+        title: "坚持一个习惯",
+        publishTime: "2017-3-5 23:03:59",
+        digest: "要有舒适自由自在的心态",
+        visit: 1046560,
+      },
+      {
+        title: "坚持就是胜利",
+        digest: "让投资变的更简单是我们的梦想",
+        visit: 2323234,
+        publishTime: "2017-3-5 23:02:59",
+        id: 9
+      }, {
+        id: 8,
+        title: "未来不迎，当时不杂，既过不恋",
+        digest: "学习一种策略，了解",
+        publishTime: "2017-3-5 23:02:59",
+        visit: 12324
+      },
     ],
   },
   onLoad: function() {
-   
+    var that=this;
+    util.ajax({
+      url: '/art/list',
+      data: {pn:this.data.pn,sz:this.data.sz},
+      succ: function (res) {
+        var pn=that.data.pn;
+        if(res.data.size==20){
+            pn=pn+1;
+        }
+        that.setData({
+          msgList: res.data,
+          pn:pn
+        })
+      }
+    })
   },
 
 })

@@ -1,12 +1,16 @@
-<!--用name 定义模版-->
-<template name="docList">
-  <view class="weui-article__section">
-    <view class="weui-article__h1">{{title}}</view>
-    <view class="weui-article__p">
-      {{content}}
-    </view>
-    <view class="weui-article__p" wx:if="{{src}}">
-      <image class="weui-article__img" src="{{src}}" mode="aspectFit" style="height: 180px" />
+
+<template name='list'>
+  <view class="weui-panel__bd">
+    <view class="weui-media-box weui-media-box_text">
+      <navigator url="/pages/index/article/article?id={{id}} " hover-class="weui-cell_active">
+        <view class="weui-media-box__title weui-media-box__title_in-text">{{title}}</view>
+        <view class="weui-media-box__desc">{{digest}}</view>
+        <view class="weui-media-box__info">
+          <view class="weui-media-box__info__meta">{{publishTime}}</view>
+          <view class="weui-media-box__info__meta weui-media-box__info__meta_extra">{{visitCount}}</view>
+          <view class="weui-media-box__info__meta weui-media-box__info__meta_extra"></view>
+        </view>
+      </navigator>
     </view>
   </view>
 </template>
@@ -14,15 +18,11 @@
 
 
 <view class="page">
-  <view class="page__hd">
-    <view class="page__title">{{theme}}</view>
-    <view class="page__desc">{{themeDesc}}</view>
-  </view>
   <view class="page__bd">
-    <view class="weui-article">
-        <view wx:for="{{msgList}}" wx:key="{{title}}">
-          <template is="docList" data="{{...item}}" />
-        </view>
+    <view class="weui-panel">
+      <view wx:for="{{msgList}}" wx:key="{{title}}">
+        <template is="list" data="{{...item}}" />
+      </view>
     </view>
   </view>
 </view>

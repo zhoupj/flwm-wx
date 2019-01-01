@@ -1,209 +1,38 @@
-<template name="highSearch">
-  <view class="weui-toptips weui-toptips_warn" wx:if="{{showTopTips}}">{{errMsg}}</view>
-      <form bindsubmit="formSubmit" bindreset="formReset">
-      <view class="weui-cells__title">日期</view>
-      <view class="weui-cells weui-cells_after-title">
-        <view class="weui-cell weui-cell_input">
-          <view class="weui-cell__hd">
-            <view class="weui-label">日期</view>
-          </view>
-          <view class="weui-cell__bd">
-            <picker name="tradeDate" mode="date" value="{{date}}" start="2018-09-01" end="2020-09-01" bindchange="bindDateChange">
-              <view class="weui-input">{{date}}</view>
-            </picker>
-          </view>
+<import src="../../style/list.wxml" />
+<import src="../../style/searchCond.wxml" />
+
+
+
+
+<view class="page" xmlns:wx="http://www.w3.org/1999/xhtml">
+  <view class="page__bd">
+
+    <view class="weui-tab">
+      <view class="weui-navbar nav_b_c">
+        <view id="0" class="weui-navbar__item" bindtap="kindToggle" >
+        <!-- bindlongpress="recordToggle" -->
+          <view class="weui-navbar__title">{{open?'折叠':'展开'}}</view>
         </view>
       </view>
-      <view class="weui-cells__title">RPS指标</view>
-      <view class="weui-cells weui-cells_after-title">
-        <view class="weui-cell weui-cell_select">
-          <view class="weui-cell__hd weui-cell__hd_in-select-after">
-            <view class="weui-label">参数</view>
-          </view>
-          <view class="weui-cell__bd">
-            <picker name="rps" bindchange="bindRpsChange" value="{{rpsIdx}}" range="{{rps}}">
-              <view class="weui-select">{{rps[rpsIdx]}}</view>
-            </picker>
-          </view>
+      <view class="weui-tab__panel">
+        <view class="kind-list__item-bd {{open ? 'kind-list__item-bd_show' : ''}}">
+          <template is="highSearch" data="{{...search}}" />
         </view>
-        <view class="weui-cell weui-cell_select">
-          <view class="weui-cell__hd weui-cell__hd_in-select-after">
-            <view class="weui-label">{{"取值(>=)"}}</view>
-          </view>
-          <view class="weui-cell__bd">
-            <slider name="rps_value" show-value value="87" max="99" />
-          </view>
-        </view>
+        <block wx:if="{{!open}}">
+          <template is="searchResult" data="{{...result}}" />
+        </block>
       </view>
-
-
-      <view class="weui-cells__title">业绩指标</view>
-      <view class="weui-cells weui-cells_after-title">
-        <view class="weui-cell weui-cell_select">
-          <view class="weui-cell__hd weui-cell__hd_in-select-after">
-            <view class="weui-label">{{"业绩排名(>=)"}}</view>
-          </view>
-          <view class="weui-cell__bd">
-            <slider name="ssr2" show-value value="60" />
-          </view>
-        </view>
-      </view>
-
-
-      <view class="weui-cells__title">机构动向</view>
-      <view class="weui-cells weui-cells_after-title">
-        <view class="weui-cell weui-cell_select">
-          <view class="weui-cell__hd weui-cell__hd_in-select-after">
-            <view class="weui-label">{{"基金占比(>=)"}}</view>
-          </view>
-          <view class="weui-cell__bd">
-            <slider name="fundHolding" show-value value="3" max="30" />
-          </view>
-        </view>
-        <view class="weui-cell weui-cell_select">
-          <view class="weui-cell__hd weui-cell__hd_in-select-after">
-            <view class="weui-label">{{"港资(>=)亿"}}</view>
-          </view>
-          <view class="weui-cell__bd">
-            <slider name="hkHoldingAmount" show-value value="0" max="10" min="0" step="0.1"/>
-          </view>
-        </view>
-      </view>
-
-
-
-      <view class="weui-cells__title">新高指标</view>
-      <view class="weui-cells weui-cells_after-title">
-        <view class="weui-cell weui-cell_select">
-          <view class="weui-cell__hd weui-cell__hd_in-select-after">
-            <view class="weui-label">参数</view>
-          </view>
-          <view class="weui-cell__bd">
-            <picker name="diff" bindchange="bindHighChange" value="{{highIdx}}" range="{{high}}">
-              <view class="weui-select">{{high[highIdx]}}</view>
-            </picker>
-          </view>
-        </view>
-        <view class="weui-cell weui-cell_select">
-          <view class="weui-cell__hd weui-cell__hd_in-select-after">
-            <view class="weui-label">{{"差值率(<=)"}}</view>
-            </view>
-            <view class="weui-cell__bd">
-              <slider name="diffValue" show-value value="10" max="50" />
-            </view>
-        </view>
-      </view>
-
-
-
-      <view class="weui-cells__title">反转指标</view>
-      <view class="weui-cells weui-cells_after-title">
-        <view class="weui-cell weui-cell_switch">
-          <view class="weui-cell__bd">月线翻转</view>
-          <view class="weui-cell__ft">
-            <switch name="isMR" />
-          </view>
-        </view>
-        <view class="weui-cell weui-cell_switch">
-          <view class="weui-cell__bd">站上年线</view>
-          <view class="weui-cell__ft">
-            <switch name="gy" />
-          </view>
-        </view>
-      </view>
-   
-      
-      <view class="weui-cells__title">稳定指标</view>
-      <view class="weui-cells weui-cells_after-title">
-        <view class="weui-cell weui-cell_select">
-            <view class="weui-cell__hd weui-cell__hd_in-select-after">
-              <view class="weui-labe">{{"换手率(<=)"}}</view>
-            </view>
-            <view class="weui-cell__bd">
-              <slider name="turn" show-value value="10" max="50"/>
-            </view>
-        </view>
-        <view class="weui-cell weui-cell_select">
-            <view class="weui-cell__hd weui-cell__hd_in-select-after">
-              <view class="weui-label">{{"波动率(<=)"}}</view>
-          </view>
-          <view class="weui-cell__bd">
-            <slider name="fluof250d" show-value value="60" max="100"/>
-          </view>
-        </view>
-      </view>
-
-      <button class="weui-btn" type="primary" formType="submit">确定</button>
-
-    </form> 
-</template>
-
-
-
-  <view class="page" xmlns:wx="http://www.w3.org/1999/xhtml">
-    <view class="page__bd">
-
-    
-        <view class="kind-list">
-           
-                    <view class="weui-flex kind-list__item-hd {{open ? 'kind-list__item-hd_show' : ''}}" bindtap="kindToggle">
-                        <view class="weui-flex__item">高级搜索</view>
-                        <image class="kind-list__img" src="../../images/icon_nav_form.png"></image> 
-                    </view>
-                    <view class="kind-list__item-bd {{open ? 'kind-list__item-bd_show' : ''}}">
-                         <template is="highSearch" data="{{...search}}"/>
-                    </view>
-        </view>
-
-  <view class="top">
-    <view class="tableLeft" wx:if="{{data && data.length>0}}">
-        <view class="trLeft bg-w trh">
-           <view class="thLeft">名称</view>
-        </view>
-        <block wx:for="{{data}}" wx:key="{{code}}">
-                <view class="trLeft  bg-g">
-                  <view class="tdLeft">{{item.name}}<view class="code">{{item.code}}</view> </view> 
-                </view>
-        </block> 
-     </view>       
-   <scroll-view scroll-x class="scroll-x"  wx:if="{{data && data.length>0}}">
-     
-       <view class="table">
-          <view class="tr bg-w trh" >
-             <view class="th ">行业</view>
-             <view class="th">涨幅</view>
-            <view class="th">总市值</view>
-            <view class="th">差值</view>
-            <view class="th ">RPS250</view>
-             <view class="th ">RPS120</view>
-              <view class="th ">SSR2</view>
-              <view class="th ">基金</view>
-              <view class="th ">港资</view>
-               <view class="th ">换手率</view>
-               <view class="th ">波动率</view>
-                <view class="th ">市盈率</view>
-          </view>
-          <block wx:for="{{data}}" wx:key="{{code}}">
-            <view class="tr bg-g" bindlongpress="seeDetail" data-code="{{item.code}}">
-              <view class="td">{{item.industry}}</view>
-              <view class="td {{item.incof2d>0?'green-color':'red-color'}}">{{item.incof2d}}</view>
-               <view class="td">{{item.totals}}</view>
-                <view class="td">{{item.difftohigh250}}</view>
-                 <view class="td">{{item.rps250}}</view>
-              <view class="td">{{item.rps120}}</view>
-              <view class="td">{{item.ssr2}}</view>
-               <view class="td">{{item.fundHolding}}</view>
-                <view class="td">{{item.hkHoldingAmount}}</view>
-                 <view class="td">{{item.turn}}</view>
-              <view class="td">{{item.fluof250d}}</view>
-              <view class="td">{{item.pettm}}</view>
-            </view>
-          </block>
-        </view>
-    </scroll-view> 
     </view>
-    </view>
+
+    <!-- <view class="kind-list">
+      <view class="weui-flex kind-list__item-hd {{open ? 'kind-list__item-hd_show' : ''}} search" bindtap="kindToggle">
+        <view class="weui-flex__item">高级搜索</view>
+        <image class="kind-list__img" src="../../images/icon_nav_form.png"></image>
+      </view>
+      <view class="kind-list__item-bd {{open ? 'kind-list__item-bd_show' : ''}}">
+        <template is="highSearch" data="{{...search}}" />
+      </view>
+       <template is="searchResult" data="{{...result}}" />
+    </view> -->
   </view>
-  
-    
-
+</view>

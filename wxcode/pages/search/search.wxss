@@ -47,3 +47,12 @@ slider {
   padding-bottom: 1px;
 }
 
+.nav_b_c{
+  background: rgb(52, 168, 52);
+  color:#fff
+}
+
+.img {
+  height: 16px
+}
+

@@ -1,9 +1,21 @@
 {
   "pages":[
     "pages/index/index",
+    "pages/index/article/article",
     "pages/search/search",
+    "pages/search/index/index",
+    "pages/search/record/record",
     "pages/select/select",
     "pages/mine/mine",
+    "pages/mine/bind/bind",
+    "pages/mine/sgst/sgst",
+    "pages/mine/about/about",
+    "pages/mine/help/help",
+    "pages/mine/member/member",
+    "pages/mine/clean/clean",
+    "pages/mine/cup/cup",
+    "pages/mine/cup/trans/trans",
+    "pages/mine/cup/add/add",
     "pages/logs/logs",
     "pages/detail/detail",
     "pages/auth/auth",
@@ -14,7 +26,8 @@
     "backgroundTextStyle":"light",
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "圣杯",
-    "navigationBarTextStyle":"black"
+    "navigationBarTextStyle":"black",
+     "enablePullDownRefresh":true
   },
   "tabBar": {
     "color": "#a9b7b7",
@@ -30,7 +43,7 @@
       {
         "selectedIconPath": "images/search_red.png",
         "iconPath": "images/search.png",
-        "pagePath": "pages/search/search",
+        "pagePath": "pages/search/index/index",
         "text": "查找"
       },
       {
@@ -46,5 +59,8 @@
         "text": "我的"
       }
     ]
+  },
+  "networkTimeout": {
+    "request": 10000
   }
 }

@@ -1,5 +1,5 @@
 <!--index.wxml-->
-<view class="container">
+<!-- <view class="container">
   <view class="userinfo">
     <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 头像 </button>
     <block wx:else>
@@ -12,4 +12,57 @@
      <text class="user-motto">{{count}}</text>
   </view>
   <button bindtap="clickMe">点击我</button>
+</view> -->
+
+
+<view class="page-user">
+  <view class="weui-panel">
+    <view class="weui-cells weui-cells_after-title">
+      <view class="weui-cell">
+        <view class="weui-cell__bd userinfo clearfix">
+          <image class="userinfo-avatar" src="{{ userInfo.avatarUrl }}" background-size="cover"/>
+          <view class="userinfo-info">
+            <view class="userinfo-nickname">{{ userInfo.nickName }}</view>
+            <view class="userinfo-status">{{userData.isMember==1?'会员 ':'普通用户'}}{{userData.isMember==1?'('+userData.memberDeadline+')':''}}</view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="weui-panel">
+    <view class="weui-cells weui-cells_after-title">
+    <navigator class="weui-cell weui-cell_access" url="/pages/mine/cup/cup" hover-class="weui-cell_active">
+        <view class="weui-cell__bd">我的记录</view>
+        <view class="weui-cell__ft weui-cell__ft_in-access"/>
+      </navigator>
+      <navigator class="weui-cell weui-cell_access" url="/pages/mine/bind/bind" hover-class="weui-cell_active">
+        <view class="weui-cell__bd">绑定手机</view>
+        <view class="weui-cell__ft weui-cell__ft_in-access"/>
+      </navigator>
+      <navigator class="weui-cell weui-cell_access" url="/pages/mine/member/member" hover-class="weui-cell_active">
+        <view class="weui-cell__bd">会员</view>
+        <view class="weui-cell__ft weui-cell__ft_in-access"/>
+      </navigator>
+      <navigator class="weui-cell weui-cell_access" url="/pages/mine/help/help" hover-class="weui-cell_active">
+        <view class="weui-cell__bd">帮助</view>
+        <view class="weui-cell__ft weui-cell__ft_in-access"/>
+      </navigator>
+      <navigator class="weui-cell weui-cell_access" url="/pages/mine/sgst/sgst" hover-class="weui-cell_active">
+        <view class="weui-cell__bd">反馈</view>
+        <view class="weui-cell__ft weui-cell__ft_in-access"/>
+      </navigator>
+    </view>
+  </view>
+  <view class="weui-panel">
+    <view class="weui-cells weui-cells_after-title">
+      <navigator class="weui-cell weui-cell_access" url="/pages/mine/about/about" hover-class="weui-cell_active">
+        <view class="weui-cell__bd">关于我们</view>
+        <view class="weui-cell__ft weui-cell__ft_in-access"/>
+      </navigator>
+      <!-- <navigator class="weui-cell weui-cell_access" url="/pages/mine/clean/clean" hover-class="weui-cell_active">
+        <view class="weui-cell__bd">退出</view>
+        <view class="weui-cell__ft weui-cell__ft_in-access"/>
+      </navigator> -->
+    </view>
+  </view>
 </view>

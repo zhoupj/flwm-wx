@@ -1,0 +1,59 @@
+<template name="searchResult">
+  <view class="top">
+    <view class="tableLeft" wx:if="{{data && data.length>0}}">
+      <view class="trLeft bg-w trh">
+        <view class="thLeft">名称</view>
+      </view>
+      <block wx:for="{{data}}" wx:key="{{code}}">
+        <view class="trLeft  bg-g">
+          <view class="tdLeft">{{item.name}}
+            <view class="code">{{item.code}}</view>
+          </view>
+        </view>
+      </block>
+    </view>
+    <view class="weui-loadmore" wx:if="{{load}}">
+      <view class="weui-loading"></view>
+      <view class="weui-loadmore__tips">正在加载</view>
+    </view>
+    <scroll-view scroll-x class="scroll-x" wx:if="{{ !load && data.length>0}}">
+
+      <view class="table">
+        <view class="tr bg-w trh">
+          <view class="th" bindtap='sort' data-field="close">收盘</view>
+          <view class="th" bindtap='sort' data-field="incof2d">涨幅</view>
+          <view class="th" bindtap='sort' data-field="industry">行业</view>
+          <view class="th" bindtap='sort' data-field="totals">总市值</view>
+          <view class="th" bindtap='sort' data-field="difftohigh250">差值</view>
+          <view class="th" bindtap='sort' data-field="rps250">RPS</view>
+          <view class="th" bindtap='sort' data-field="ssr2">PSR</view>
+          <view class="th" bindtap='sort' data-field="fundHolding">基金</view>
+          <view class="th" bindtap='sort' data-field="hkHoldingAmount">港资</view>
+          <view class="th" bindtap='sort' data-field="turn">换手率</view>
+          <view class="th" bindtap='sort' data-field="fluof250d">波动率</view>
+          <view class="th" bindtap='sort' data-field="pettm">市盈率</view>
+        </view>
+        <block wx:for="{{data}}" wx:key="{{code}}">
+          <view class="tr bg-g" bindlongpress="seeDetail" data-code="{{item.code}}" data-name="{{item.name}}">
+            <view class="td {{item.incof2d>0?'red-color':'green-color'}}">{{item.close}}</view>
+            <view class="td {{item.incof2d>0?'red-color':'green-color'}}">{{item.incof2d + '%'}}</view>
+            <view class="td">{{item.industry}}</view>
+
+            <view class="td">{{item.totals +'亿'}}</view>
+            <view class="td">{{item.difftohigh250 +'%'}}</view>
+            <view class="td">{{item.rps250}}</view>
+            <view class="td">{{item.ssr2}}</view>
+            <view class="td">{{item.fundHolding +'%'}}</view>
+            <view class="td">{{item.hkHoldingAmount}}</view>
+            <view class="td">{{item.turn +'%'}}</view>
+            <view class="td">{{item.fluof250d +'%'}}</view>
+            <view class="td">{{item.pettm}}</view>
+          </view>
+        </block>
+      </view>
+    </scroll-view>
+    <view class="weui-loadmore weui-loadmore_line" wx:if="{{ !load && data.length==0}}">
+      <view class="weui-loadmore__tips weui-loadmore__tips_in-line showData">无数据</view>
+    </view>
+  </view>
+</template>
